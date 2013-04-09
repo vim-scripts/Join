@@ -1,0 +1,183 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=4516
+
+Join plugin provides more powerful line join features than the build-in :join.
+
+project home, examples and screenshots: https://github.com/sk1418/Join
+
+
+Features
+
+Except for all features provided by the build-in :join command, Join can:
+Join lines with separator 
+Join lines with leading and trailing whitespaces trimmed
+Join lines with negative count (backwards join)
+Join lines in reverse
+Join lines and keep joined lines (without removing)
+Join lines with any combinations of above options
+
+Usage
+
+Join plugin defines only one command: :Join. If there is no other customer command (by other plugins maybe) starts with J, :J is also available for :Join. The command format is:
+
+:[range]Join[!] [separator] [count] [flags]
+
+Short explanation: (detailed command description please check :h Join)
+
+all arguments are optional. If one argument was not given, the default value will be used:
+
+arg      | Default value
+========================
+range    | current line 
+count    | 1            
+bang     | ""           
+separator| " "          
+flags    | ""           
+------------------------
+range follows Vim's range definition
+
+separator must be the 1st argument, and could be any string. It must be quoted by " or ', depends on if an escaped special character is required.
+
+the order of last two argument: count and flags are free. e.g :Join 5 rk and :Join rk 5, both are valid.
+
+count could be negative number. In this case Join will do backwards join.
+
+flags :
+
+r : (reverse) join lines in reverse
+k : (keep) don't remove joined line after join
+If you don't give [separator] and [flags] also give only positive [count], the :Join works as same as build-in :join
+
+Examples:
+
+
+More examples with screenshots can be found at https://github.com/sk1418/Join
+
+(* indicates cursor in example)
+
+Original file: >
+
+    1
+    2
+    3
+    4
+    5*
+    6
+    7
+    8
+    9
+    10
+
+- with [separator] and [count] >
+
+   :J ', ' 3
+
+result >
+
+    1
+    2
+    3
+    4
+    5, 6, 7
+    8*
+    9
+    10
+
+
+- with [separator], [count] and [flag] r  >
+
+ :J '-' 3 r
+
+result >
+
+    1
+    2
+    3
+    4
+    7-6-5
+    8*
+    9
+    10
+
+- with [separator], [count] and [flag] k >
+
+ :J '-' 3 k
+
+result >
+
+    1
+    2
+    3
+    4
+    *5-6-7
+    6
+    7
+    8
+    9
+    10
+
+
+- with negative [count] >
+
+ :J -3
+
+result >
+
+    1
+    2
+    3 4 5
+    6*
+    7
+    8
+    9
+    10
+
+
+- with special [separator], negative [count] and [flag] kr >
+
+ :J "'\"\t" -3 kr
+
+result >
+
+    1
+    2
+    3
+    4
+    5'"	4'"	3
+    6*
+    7
+    8
+    9
+    10
+
+
+- with [range] and [count] >
+
+ :2,5J 3
+
+result >
+    1
+    2
+    3
+    4
+    5 6 7
+    8*
+    9
+    10
+
+- with [range], negative [count] and [flag] k >
+
+ :5,7J -3 k
+
+result >
+
+    1
+    2
+    3
+    4
+    *3 4 5
+    6
+    7
+    8
+    9
+    10
+
