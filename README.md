@@ -16,10 +16,10 @@
 
 Except for all features provided by the build-in `:join` command, **Join** can:
 
-- **Join** lines with separator (any string)
-- **Join** lines with leading and trailing whitespaces trimmed
-- **Join** lines with negative Count
-- **Join** lines with reversely
+- **Join** lines with separator (string)
+- **Join** lines with or without trimming the leading whitespaces
+- **Join** lines with negative count (backwards join)
+- **Join** lines in reverse
 - **Join** lines and keep joined lines (without removing)
 - **Join** lines with any combinations of above options
 
@@ -27,7 +27,9 @@ Except for all features provided by the build-in `:join` command, **Join** can:
 
 >If you are impatient, move your eyes down to the **Examples and Screenshots** section. :)
 
-**Join** plugin defines only one command: `:Join`.  If there is no other customer command (by other plugins maybe) starts with `J`, `:J` is also available for `:Join`. The command format is:
+**Join** plugin defines only one command: `:Join`.  If there is no other customer command (by other plugins maybe) starts with `J`, `:J` is also available for `:Join`. 
+
+The command format is:
 
     :[range]Join[!] [separator] [count] [flags]
 		
@@ -44,13 +46,14 @@ Short explanation: (detailed command description please check `:h Join`)
         flags    | ""           
         ------------------------
 
+- all given arguments must be separated by space
 - `range` follows Vim's range definition
 - `separator` must be the 1st argument, and could be any string. It must be quoted by `"` or `'`, depends on if an escaped special character is required.
 - the order of last two argument: count and flags are free. e.g `:Join 5 rk` and `:Join rk 5`, both are valid.
 - `count` could be negative number. In this case **Join** will do backwards join.
 - `flags` :
  
-		r : (reverse) join lines reversely
+		r : (reverse) join lines in reverse
 		k : (keep) don't remove joined line after join
 
 - If you don't give `[separator]` and `[flags]` also give only positive `[count]`, the `:Join` works as same as build-in `:join`
